@@ -9,7 +9,7 @@ const router = express.Router();
 
 // Inicializa Firebase Admin SDK con el archivo de credenciales
 admin.initializeApp({
-    credential: admin.credential.cert(require('../config/firebase-admin.json')), // Ruta al archivo JSON de credenciales
+    credential: admin.credential.cert(require('../config/firebase-admin.json')), // Ruta al archivo JSON
 });
 
 // Clave secreta para JWT
