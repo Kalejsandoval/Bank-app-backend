@@ -1,11 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
-
-
 
 // Configuración de variables de entorno
 dotenv.config();
@@ -13,33 +11,39 @@ dotenv.config();
 // Inicializar aplicación
 const app = express();
 
-// Middlewares
+// Configuración de CORS avanzada
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://frontend-qy78.onrender.com',
+    'https://tu-frontend-desplegado.com', // <-- Reemplaza si tienes otro dominio
+];
 
-
-// Configuración de CORS
-
-
-// Permite solicitudes de localhost:3000
-// Configuración de CORS
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://frontend-qy78.onrender.com'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('No permitido por CORS'));
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Permitir cookies o credenciales en solicitudes
 }));
 
-
+// Middlewares
 app.use(express.json());
 
 // Conexión a MongoDB
-mongoose
-    .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB conectado exitosamente'))
-    .catch((err) => console.error('Error al conectar MongoDB:', err));
+mongoose.connect(process.env.MONGO_URI, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+}).then(() => console.log('MongoDB conectado exitosamente'))
+.catch(err => console.error('Error al conectar MongoDB:', err));
 
 // Rutas
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
-
 
 // Ruta raíz
 app.get('/', (req, res) => {
@@ -54,4 +58,5 @@ app.use((req, res) => {
 // Iniciar el servidor
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
+
 
