@@ -17,11 +17,17 @@ const app = express();
 
 
 // Configuración de CORS
+
+
+// Permite solicitudes de localhost:3000
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://tufrontenddesplegado.com'], // Permitir origen local y desplegado
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
-    allowedHeaders: ['Content-Type', 'Authorization'], // Cabeceras permitidas
+    origin: ['http://localhost:3000', 'https://tu-frontend-desplegado.com'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+app.use(express.json());
+
 app.use(express.json());
 
 // Conexión a MongoDB
