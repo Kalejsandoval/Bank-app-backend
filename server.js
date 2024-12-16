@@ -20,13 +20,13 @@ const app = express();
 
 
 // Permite solicitudes de localhost:3000
+// Configuración de CORS
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://tu-frontend-desplegado.com'],
+    origin: ['http://localhost:3000', 'https://frontend-qy78.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-app.use(express.json());
 
 app.use(express.json());
 
