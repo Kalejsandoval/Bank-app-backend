@@ -14,9 +14,14 @@ dotenv.config();
 const app = express();
 
 // Middlewares
+
+
+// Configuración de CORS
 app.use(cors({
-    origin: 'https://tufrontenddesplegado.com',
-  }));
+    origin: ['http://localhost:3000', 'https://tufrontenddesplegado.com'], // Permitir origen local y desplegado
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Cabeceras permitidas
+}));
 app.use(express.json());
 
 // Conexión a MongoDB
