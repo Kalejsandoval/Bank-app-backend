@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 
 
+
 // Configuración de variables de entorno
 dotenv.config();
 
@@ -13,7 +14,9 @@ dotenv.config();
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+    origin: 'https://tufrontenddesplegado.com',
+  }));
 app.use(express.json());
 
 // Conexión a MongoDB
