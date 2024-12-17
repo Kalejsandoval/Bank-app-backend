@@ -19,17 +19,14 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('No permitido por CORS'));
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, // Permitir cookies o credenciales en solicitudes
+    origin: ['http://localhost:3000', 'https://frontend-qy78.onrender.com'], // Orígenes permitidos
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Headers permitidos
+    credentials: true // Permitir cookies o credenciales si es necesario
 }));
+
+// **Permitir Preflight para todas las rutas**
+app.options('*', cors());
 
 // Middlewares
 app.use(express.json());
