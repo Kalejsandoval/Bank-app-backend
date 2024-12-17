@@ -128,12 +128,13 @@ router.post('/google-login', async (req, res) => {
         // Verifica el token de Firebase
         const decodedToken = await admin.auth().verifyIdToken(idToken);
         const email = decodedToken.email;
+        const name = decodedToken.name || 'Google User'; // Extrae el nombre del usuario si está presente
 
         // Verifica si el usuario ya existe en la base de datos
         let user = await User.findOne({ email });
         if (!user) {
             // Si el usuario no existe, créalo
-            user = new User({ email, balance: 0 });
+            user = new User({ email, name, balance: 0 }); // Guarda también el nombre del usuario
             await user.save();
         }
 
@@ -145,6 +146,7 @@ router.post('/google-login', async (req, res) => {
             token,
             user: {
                 id: user._id,
+                name: user.name, // Enviar el nombre del usuario
                 email: user.email,
                 balance: user.balance,
             },
@@ -153,5 +155,6 @@ router.post('/google-login', async (req, res) => {
         res.status(500).json({ error: 'Server error', details: err.message });
     }
 });
+
 
 module.exports = router;
