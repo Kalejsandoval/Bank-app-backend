@@ -15,12 +15,14 @@ const app = express();
 const allowedOrigins = [
     'http://localhost:3000',
     'https://frontend-qy78.onrender.com',
+     'https://sandovalfullstackbankingapplication.lat',
     
 ];
 app.use(cors({
     origin: [
         'http://localhost:3000',
         'https://frontend-qy78.onrender.com',
+        'https://sandovalfullstackbankingapplication.lat',
         'https://backendbanco.onrender.com' // Incluye el dominio del backend
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
